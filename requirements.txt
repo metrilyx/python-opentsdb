@@ -1,7 +1,7 @@
-Twisted==15.0.0
-numpy==1.9.2
+Twisted
+numpy
 opentsdb-pandas==0.0.1
-pandas==0.14.1
+pandas
 python-dateutil==2.4.1
 pytz==2015.2
 requests==2.6.0
