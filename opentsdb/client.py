@@ -11,13 +11,13 @@ class BaseClient(object):
             self.url = "http://%s:%d" % (host, port)
 
     def queryUrl(self, **kwargs):
-        return "%s/api/query?%s" % (self.url, self.__urlEncodedParams(**kwargs))
+        return str("%s/api/query?%s" % (self.url, self.__urlEncodedParams(**kwargs)))
 
     def __urlEncodedParams(self, aggr="sum", rate=False, end=None, **kwargs):
 
         timeStr = "start=%s" % (kwargs["start"])
         if end != None:
-            timeStr += "&end=" + end
+            timeStr += "&end=%s" % (end)
 
         if rate:
             prefix = "%s:rate:%s" % (aggr, kwargs["metric"])

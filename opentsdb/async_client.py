@@ -13,6 +13,10 @@ from pprint import pprint
 class AsyncClient(BaseClient):
 
     def __callback(self, respData, respObj, dfd):
+        d = json.loads(respData)
+        if isinstance(d, dict):
+            dfd.errback([d, respObj])
+
         dfd.callback([OpenTSDBResponse(respData), respObj])
 
     def __errback(self, respData, respObj, dfd):
@@ -20,7 +24,6 @@ class AsyncClient(BaseClient):
 
     def query(self, **kwargs):
         c = AsyncHttpClient(url=self.queryUrl(**kwargs))
-        
         dfd = Deferred()
         c.addResponseErrback(self.__errback, dfd)
         c.addResponseCallback(self.__callback, dfd)
