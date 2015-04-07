@@ -18,8 +18,8 @@ class AsyncClient(BaseClient):
         d = json.loads(respData)
         if isinstance(d, dict):
             dfd.errback([d, respObj])
-
-        dfd.callback([OpenTSDBResponse(respData), respObj])
+        else:
+            dfd.callback([OpenTSDBResponse(respData), respObj])
 
     def __errback(self, respData, respObj, dfd):
         dfd.errback([respData, respObj])
