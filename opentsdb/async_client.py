@@ -1,4 +1,6 @@
 
+import ujson as json
+
 from twisted.internet import reactor
 
 from twisted.internet.defer import Deferred
