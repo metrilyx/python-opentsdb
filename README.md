@@ -8,7 +8,6 @@ This module provides 2 types of clients:
 
 * **async_client.AsyncClient**: Async client using twisted. 
 
-
 Examples:
 
 **Regular client**:
@@ -33,13 +32,17 @@ Examples:
 **Async client**:
 
     from twisted.internet import reactor
+    from twisted.python.failure import Failure
 
     from opentsdb.async_client import AsyncClient
-
+    
     def rErrback(*args):
         print "OpenTSDB error:", args[0]
         print "HTTP response:", args[1]
         reactor.stop()
+        # If you do not return the Failure() you may experience a subsequent run of CallBack() with errored data
+        # use http://twistedmatrix.com/documents/12.0.0/core/howto/defer.html for reference
+        return Failure() # See note on Return Failure for this.
 
     def rCallback(args):
         print "OpenTSDB response:", args[0]
